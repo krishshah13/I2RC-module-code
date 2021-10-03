@@ -35,11 +35,15 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    //arcadeDrive(-0.8 * _joystick.getRawAxis(Constants.JoystickAxis.YAxis);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
     _diffDrive.tankDrive(leftSpeed, rightSpeed);
 
+  }
 
+  public void arcadeDrive(double speed, double turn){
+    _diffDrive.arcadeDrive(speed, turn);
   }
 }
