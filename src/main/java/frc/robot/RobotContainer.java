@@ -8,9 +8,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.DriveForward;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.TimedAuto;
+import frc.robot.commands.autoPath1;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,7 +31,8 @@ public class RobotContainer {
   private final TankDrive _tankDrive;
   private final ArcadeDrive _arcadeDrive;
   private final TimedAuto _auto;
-
+  private final DriveForward _driveForward;
+  private final autoPath1 _autopath1;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -39,9 +42,12 @@ public class RobotContainer {
     _tankDrive = new TankDrive(_driveTrain, _leftJoystick, _rightJoystick);
     _arcadeDrive = new ArcadeDrive(_driveTrain, _leftJoystick);
     _auto = new TimedAuto(_driveTrain);
+    _driveForward = new DriveForward(_driveTrain, 6.9);
+    _autopath1 = new autoPath1();
 
    _driveTrain.setDefaultCommand(_arcadeDrive);
 
+   
     configureButtonBindings();
   }
 
@@ -51,6 +57,11 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+    public DriveTrain getDriveTrain(){
+      return _driveTrain;
+    }
+
+
   private void configureButtonBindings() {}
 
   /**
@@ -60,6 +71,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return _auto;
+    return _autopath1;
   }
 }

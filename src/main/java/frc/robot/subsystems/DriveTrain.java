@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,6 +19,8 @@ public class DriveTrain extends SubsystemBase {
   private final WPI_TalonSRX _leftDriveTalon;
   private final WPI_TalonSRX _righttDriveTalon;
   private AHRS navx = new AHRS(SPI.Port.kMXP);
+  private final int pconstant = 1;
+  private final int vconstant = 1;
 
   private DifferentialDrive _diffDrive;
 
@@ -58,11 +61,19 @@ public class DriveTrain extends SubsystemBase {
   }
 
 public double getDistance() {
-  return ((_leftDriveTalon.getSelectedSensorPosition(0) + _righttDriveTalon.getSelectedSensorPosition(0))/2) * "find constant";
+  return ((_leftDriveTalon.getSelectedSensorPosition(0) + _righttDriveTalon.getSelectedSensorPosition(0))/2) * pconstant;
 }
 
 public double getVelocity() {
-  return ((_leftDriveTalon.getSensorCollection().getPulseWidthVelocity() + _righttDriveTalon.getSensorCollection().getPulseWidthVelocity())/2) * "find constant";
+  return ((_leftDriveTalon.getSensorCollection().getPulseWidthVelocity() + _righttDriveTalon.getSensorCollection().getPulseWidthVelocity())/2) * vconstant;
+}
+
+public double getNavAngle() {
+return (navx.getAngle());
+}
+
+public void resetGyro() {
+  navx.reset();
 }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {

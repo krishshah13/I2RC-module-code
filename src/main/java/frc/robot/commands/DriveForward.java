@@ -8,42 +8,42 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
-public class TimedAuto extends CommandBase {
-  DriveTrain _driveTrain;
-  Timer _timer;
+public class DriveForward extends CommandBase {
+  private final DriveTrain _driveTrain;
+  private double distance;
 
   /** Creates a new TimedAuto. */
-  public TimedAuto(DriveTrain dt) {
+  public DriveForward(DriveTrain dt, double newDistance) {
     _driveTrain = dt;
-    _timer = new Timer();
+    distance = newDistance;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    _timer.reset();
-    _timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (_timer.get() <= 1) {
       _driveTrain.tankDrive(0.5, 0.5);
-    }
-    if (_timer.get() > 10) {
-      _driveTrain.tankDrive(0, 0);
-    }
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    _driveTrain.tankDrive(0, 0);
+    _driveTrain.resetEncoders();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (_driveTrain.getDistance() >= distance) {
+      return true;
+    }
     return false;
   }
 }
