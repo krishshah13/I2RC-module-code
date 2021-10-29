@@ -13,6 +13,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.TimedAuto;
 import frc.robot.commands.autoPath1;
+import frc.robot.commands.autoPath2;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,6 +34,8 @@ public class RobotContainer {
   private final TimedAuto _auto;
   private final DriveForward _driveForward;
   private final autoPath1 _autopath1;
+  private final autoPath2 _autopath2;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -44,6 +47,8 @@ public class RobotContainer {
     _auto = new TimedAuto(_driveTrain);
     _driveForward = new DriveForward(_driveTrain, 6.9);
     _autopath1 = new autoPath1();
+    _autopath2 = new autoPath2();
+
 
    _driveTrain.setDefaultCommand(_arcadeDrive);
 
@@ -71,6 +76,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return _autopath1;
+    return _autopath2;
   }
 }
